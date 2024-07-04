@@ -22,6 +22,10 @@ class Articles
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $url_image = null;
 
+    #[ORM\ManyToOne]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Commercants $id_commercants = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -59,6 +63,18 @@ class Articles
     public function setUrlImage(?string $url_image): static
     {
         $this->url_image = $url_image;
+
+        return $this;
+    }
+
+    public function getIdCommercants(): ?Commercants
+    {
+        return $this->id_commercants;
+    }
+
+    public function setIdCommercants(?Commercants $id_commercants): static
+    {
+        $this->id_commercants = $id_commercants;
 
         return $this;
     }

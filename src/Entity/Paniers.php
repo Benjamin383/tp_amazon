@@ -13,8 +13,24 @@ class Paniers
     #[ORM\Column]
     private ?int $id = null;
 
+    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Visiteurs $id_visiteurs = null;
+
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function getIdVisiteurs(): ?Visiteurs
+    {
+        return $this->id_visiteurs;
+    }
+
+    public function setIdVisiteurs(Visiteurs $id_visiteurs): static
+    {
+        $this->id_visiteurs = $id_visiteurs;
+
+        return $this;
     }
 }
