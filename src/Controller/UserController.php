@@ -6,7 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-class VisiteursController extends AbstractController
+class UserController extends AbstractController
 {
     #[Route('/', name: 'app_home')]
     public function index(): Response
@@ -19,7 +19,7 @@ class VisiteursController extends AbstractController
     #[Route('/inscription', name: 'inscription')]
     public function inscription(): Response
     {
-        return $this->render('visiteurs/inscription.html.twig', [
+        return $this->render('user/inscription.html.twig', [
             'title' => "Inscription à l'Amazonie",
         ]);
     }

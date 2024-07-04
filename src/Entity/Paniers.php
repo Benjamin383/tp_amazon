@@ -15,21 +15,21 @@ class Paniers
 
     #[ORM\OneToOne(cascade: ['persist', 'remove'])]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Visiteurs $id_visiteurs = null;
+    private ?User $id_user = null;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getIdVisiteurs(): ?Visiteurs
+    public function getIdUser(): ?User
     {
-        return $this->id_visiteurs;
+        return $this->id_user;
     }
 
-    public function setIdVisiteurs(Visiteurs $id_visiteurs): static
+    public function setIdUser(User $id_user): static
     {
-        $this->id_visiteurs = $id_visiteurs;
+        $this->id_user = $id_user;
 
         return $this;
     }
