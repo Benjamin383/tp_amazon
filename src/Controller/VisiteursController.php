@@ -12,7 +12,7 @@ class VisiteursController extends AbstractController
     public function index(): Response
     {
         return $this->render('base.html.twig', [
-            'title' => 'Amazonie',
+            'title' => "Amazonie",
         ]);
     }
 
@@ -20,7 +20,7 @@ class VisiteursController extends AbstractController
     public function inscription(): Response
     {
         return $this->render('visiteurs/inscription.html.twig', [
-            'title' => "Inscription à L'Amazonie",
+            'title' => "Inscription à l'Amazonie",
         ]);
     }
 }
