@@ -7,6 +7,7 @@ use App\Form\CommercantsType;
 use App\Repository\CommercantsRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -14,12 +15,20 @@ use Symfony\Component\Routing\Attribute\Route;
 #[Route('/commercants')]
 class CommercantsController extends AbstractController
 {
+
     #[Route('/', name: 'app_commercants_index', methods: ['GET'])]
-    public function index(CommercantsRepository $commercantsRepository): Response
+    public function index(CommercantsRepository $commercantsRepository, Security $security): Response
     {
-        return $this->render('commercants/index.html.twig', [
-            'commercants' => $commercantsRepository->findAll(),
-        ]);
+        $user = $security->getUser();
+        
+        if(in_array("ROLE_COMMERCANT", $user->getRoles()) ){
+            return $this->render('commercants/index.html.twig', [
+                'commercants' => $commercantsRepository->findAll(),
+            ]);
+        }else{
+            return $this->redirectToRoute('app_commercants_new');
+        }
+        
     }
 
     #[Route('/new', name: 'app_commercants_new', methods: ['GET', 'POST'])]

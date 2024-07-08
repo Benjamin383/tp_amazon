@@ -31,6 +31,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?string $password = null;
 
+    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
+    private ?Commercants $commercant = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -68,6 +71,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $roles = $this->roles;
         // guarantee every user at least has ROLE_USER
         $roles[] = 'ROLE_USER';
+        if ($this->getCommercant()){
+            $roles[] = 'ROLE_COMMERCANT';
+        }
+        
 
         return array_unique($roles);
     }
@@ -104,5 +111,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
+    }
+
+    public function getCommercant(): ?Commercants
+    {
+        return $this->commercant;
+    }
+
+    public function setCommercant(?Commercants $commercant): static
+    {
+        $this->commercant = $commercant;
+
+        return $this;
     }
 }
