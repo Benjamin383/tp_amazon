@@ -20,8 +20,7 @@ class CommercantsController extends AbstractController
     public function index(CommercantsRepository $commercantsRepository, Security $security): Response
     {
         $user = $security->getUser();
-        
-        if(in_array("ROLE_COMMERCANT", $user->getRoles()) ){
+        if(in_array("ROLE_COMMERCANT", $user->getRoles())){
             return $this->render('commercants/index.html.twig', [
                 'commercants' => $commercantsRepository->findAll(),
             ]);

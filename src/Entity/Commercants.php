@@ -19,8 +19,7 @@ class Commercants
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $description = null;
 
-    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\OneToOne(inversedBy: 'commercant', cascade: ['persist', 'remove'])]
     private ?User $id_user = null;
 
     public function getId(): ?int
@@ -57,10 +56,11 @@ class Commercants
         return $this->id_user;
     }
 
-    public function setIdUser(User $id_user): static
+    public function setIdUser(?User $id_user): static
     {
         $this->id_user = $id_user;
 
         return $this;
     }
+
 }

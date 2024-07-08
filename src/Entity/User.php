@@ -31,7 +31,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?string $password = null;
 
-    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
+    #[ORM\OneToOne(mappedBy: 'id_user', cascade: ['persist', 'remove'])]
     private ?Commercants $commercant = null;
 
     public function getId(): ?int
@@ -74,8 +74,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         if ($this->getCommercant()){
             $roles[] = 'ROLE_COMMERCANT';
         }
-        
-
         return array_unique($roles);
     }
 
@@ -120,8 +118,19 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function setCommercant(?Commercants $commercant): static
     {
+        // unset the owning side of the relation if necessary
+        if ($commercant === null && $this->commercant !== null) {
+            $this->commercant->setIdUser(null);
+        }
+
+        // set the owning side of the relation if necessary
+        if ($commercant !== null && $commercant->getIdUser() !== $this) {
+            $commercant->setIdUser($this);
+        }
+
         $this->commercant = $commercant;
 
         return $this;
     }
+
 }
