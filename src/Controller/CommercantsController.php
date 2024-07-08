@@ -12,7 +12,6 @@ use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
-use App\Entity\User;
 
 #[Route('/commercants')]
 class CommercantsController extends AbstractController
@@ -22,19 +21,6 @@ class CommercantsController extends AbstractController
     {
         $user = $security->getUser();
         if($user instanceof User && in_array("ROLE_COMMERCANT", $user->getRoles())){
-            return $this->render('commercants/dashboard.html.twig', [
-                'commercant' => $commercantsRepository->findOneBy(['id' => $user->getCommercant()]),
-            ]);
-        }else{
-            return $this->redirectToRoute('app_commercants_new');
-        }
-    }
-
-    #[Route('/dashboard', name: 'app_commercants_dashboard', methods: ['GET'])]
-    public function dashboard(CommercantsRepository $commercantsRepository, Security $security): Response
-    {
-        $user = $security->getUser();
-        if(in_array("ROLE_COMMERCANT", $user->getRoles())){
             return $this->render('commercants/dashboard.html.twig', [
                 'commercant' => $commercantsRepository->findOneBy(['id' => $user->getCommercant()]),
             ]);
