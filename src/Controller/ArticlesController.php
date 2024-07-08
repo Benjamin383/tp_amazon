@@ -3,6 +3,8 @@
 namespace App\Controller;
 
 use App\Entity\Articles;
+use App\Entity\Commercants;
+use App\Entity\User;
 use App\Form\ArticlesType;
 use App\Repository\ArticlesRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -10,10 +12,22 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Bundle\SecurityBundle\Security;
+use App\Repository\CommercantsRepository;
 
 #[Route('/articles')]
 class ArticlesController extends AbstractController
 {
+    private ?Commercants $commercant = null;
+
+    public function __construct(Security $security, CommercantsRepository $commercantsRepository)
+    {
+        $user = $security->getUser();
+        if ($user instanceof User && in_array("ROLE_COMMERCANT", $user->getRoles())) {
+            $this->commercant  = $commercantsRepository->findOneBy(['id' => $user->getCommercant()]);
+        }
+    }   
+
     #[Route('/', name: 'app_articles_index', methods: ['GET'])]
     public function index(ArticlesRepository $articlesRepository): Response
     {
@@ -47,6 +61,7 @@ class ArticlesController extends AbstractController
     {
         return $this->render('articles/show.html.twig', [
             'article' => $article,
+            'commercant' => $this->commercant,
         ]);
     }
 
@@ -71,7 +86,7 @@ class ArticlesController extends AbstractController
     #[Route('/{id}', name: 'app_articles_delete', methods: ['POST'])]
     public function delete(Request $request, Articles $article, EntityManagerInterface $entityManager): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$article->getId(), $request->getPayload()->getString('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $article->getId(), $request->getPayload()->getString('_token'))) {
             $entityManager->remove($article);
             $entityManager->flush();
         }
