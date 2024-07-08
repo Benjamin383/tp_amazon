@@ -39,9 +39,7 @@ class CommercantsController extends AbstractController
         }else{
             return $this->redirectToRoute('app_commercants_new');
         }
-        
     }
-
 
     #[Route('/new', name: 'app_commercants_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
