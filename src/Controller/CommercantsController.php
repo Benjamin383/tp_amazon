@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Commercants;
+use App\Entity\User;
 use App\Form\CommercantsType;
 use App\Repository\CommercantsRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -16,6 +17,18 @@ use App\Entity\User;
 #[Route('/commercants')]
 class CommercantsController extends AbstractController
 {
+    #[Route('/dashboard', name: 'app_commercants_dashboard', methods: ['GET'])]
+    public function dashboard(CommercantsRepository $commercantsRepository, Security $security): Response
+    {
+        $user = $security->getUser();
+        if($user instanceof User && in_array("ROLE_COMMERCANT", $user->getRoles())){
+            return $this->render('commercants/dashboard.html.twig', [
+                'commercant' => $commercantsRepository->findOneBy(['id' => $user->getCommercant()]),
+            ]);
+        }else{
+            return $this->redirectToRoute('app_commercants_new');
+        }
+    }
 
     #[Route('/dashboard', name: 'app_commercants_dashboard', methods: ['GET'])]
     public function dashboard(CommercantsRepository $commercantsRepository, Security $security): Response
@@ -35,14 +48,14 @@ class CommercantsController extends AbstractController
     {
         $user = $security->getUser();
         if(in_array("ROLE_COMMERCANT", $user->getRoles())){
-            return $this->render('commercants/index.html.twig', [
-                'commercants' => $commercantsRepository->findAll(),
-            ]);
+            return $this->redirectToRoute('app_commercants_dashboard');
+
         }else{
             return $this->redirectToRoute('app_commercants_new');
         }
         
     }
+
 
     #[Route('/new', name: 'app_commercants_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response

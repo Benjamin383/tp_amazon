@@ -14,12 +14,12 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Bundle\SecurityBundle\Security;
 use App\Repository\CommercantsRepository;
- 
+
 #[Route('/articles')]
 class ArticlesController extends AbstractController
 {
-    private Commercants|null $commercant = null;
- 
+    private ?Commercants $commercant = null;
+
     public function __construct(Security $security, CommercantsRepository $commercantsRepository)
     {
         $user = $security->getUser();
@@ -27,7 +27,7 @@ class ArticlesController extends AbstractController
             $this->commercant  = $commercantsRepository->findOneBy(['id' => $user->getCommercant()]);
         }
     }   
- 
+
     #[Route('/', name: 'app_articles_index', methods: ['GET'])]
     public function index(ArticlesRepository $articlesRepository): Response
     {
