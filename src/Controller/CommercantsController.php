@@ -42,9 +42,12 @@ class CommercantsController extends AbstractController
     }
 
     #[Route('/new', name: 'app_commercants_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    public function new(Request $request, EntityManagerInterface $entityManager, Security $security): Response
     {
+        
         $commercant = new Commercants();
+        $user = $security->getUser();
+        $commercant->setIdUser($user);
         $form = $this->createForm(CommercantsType::class, $commercant);
         $form->handleRequest($request);
 
@@ -52,7 +55,7 @@ class CommercantsController extends AbstractController
             $entityManager->persist($commercant);
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_commercants_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_commercants_index', ["id_user" => $commercant->getIdUser()], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('commercants/new.html.twig', [
