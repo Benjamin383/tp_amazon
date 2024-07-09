@@ -24,7 +24,8 @@ class ArticlesController extends AbstractController
     {
         $user = $security->getUser();
         if ($user instanceof User && in_array("ROLE_COMMERCANT", $user->getRoles())) {
-            $this->commercant  = $commercantsRepository->findOneBy(['id' => $user->getCommercant()]);
+            //$this->commercant  = $commercantsRepository->findOneBy(['id' => $user->getCommercant()]);
+            $this->commercant  = $user->getCommercant();
         }
     }   
 
@@ -54,7 +55,7 @@ class ArticlesController extends AbstractController
             $entityManager->persist($article);
             $entityManager->flush();
  
-            return $this->redirectToRoute('app_articles_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_articles_commercant', [], Response::HTTP_SEE_OTHER);
         }
  
         return $this->render('articles/new.html.twig', [
