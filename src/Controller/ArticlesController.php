@@ -39,7 +39,7 @@ class ArticlesController extends AbstractController
     public function index_commercant(ArticlesRepository $articlesRepository): Response
     {
         return $this->render('articles/index_commercant.html.twig', [
-            'articles' => $articlesRepository->findAll(["id_commercants" => $this->commercant->getId()]),
+            'articles' => $this->commercant->getArticles()
         ]);
     }
  
