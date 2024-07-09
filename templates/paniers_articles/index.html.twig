@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}PaniersArticles index{% endblock %}
+
+{% block body %}
+    <h1>PaniersArticles index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Quantite</th>
+                <th>Deja_payer</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for paniers_article in paniers_articles %}
+            <tr>
+                <td>{{ paniers_article.id }}</td>
+                <td>{{ paniers_article.quantite }}</td>
+                <td>{{ paniers_article.dejaPayer ? 'Yes' : 'No' }}</td>
+                <td>
+                    <a href="{{ path('app_paniers_articles_show', {'id': paniers_article.id}) }}">show</a>
+                    <a href="{{ path('app_paniers_articles_edit', {'id': paniers_article.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_paniers_articles_new') }}">Create new</a>
+{% endblock %}
