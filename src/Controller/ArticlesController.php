@@ -35,6 +35,13 @@ class ArticlesController extends AbstractController
             'articles' => $articlesRepository->findAll(),
         ]);
     }
+    #[Route('/commercant', name: 'app_articles_commercant', methods: ['GET'])]
+    public function index_commercant(ArticlesRepository $articlesRepository): Response
+    {
+        return $this->render('articles/index_commercant.html.twig', [
+            'articles' => $articlesRepository->findAll(["id_commercants" => $this->commercant->getId()]),
+        ]);
+    }
  
     #[Route('/new', name: 'app_articles_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response

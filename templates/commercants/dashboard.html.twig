@@ -3,10 +3,8 @@
 {% block title %}Mon commerce {% endblock %}
 
 {% block body %}
-    
-
             <h1>Dashboard {{ commercant.nom }}</h1>
             <p>{{ commercant.description }}</p>
-            <a href="{{ path('app_commercants_edit', {'id': commercant.id}) }}">Editer</a>
-               
+            <a href="{{ path('app_commercants_edit', {'id': commercant.id}) }}">Editer ma boutique</a><br>
+            <a href="{{ path('app_articles_commercant') }}">Mes articles</a>
 {% endblock %}
