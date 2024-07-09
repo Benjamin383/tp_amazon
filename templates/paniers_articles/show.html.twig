@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}PaniersArticles{% endblock %}
+
+{% block body %}
+    <h1>PaniersArticles</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ paniers_article.id }}</td>
+            </tr>
+            <tr>
+                <th>Quantite</th>
+                <td>{{ paniers_article.quantite }}</td>
+            </tr>
+            <tr>
+                <th>Deja_payer</th>
+                <td>{{ paniers_article.dejaPayer ? 'Yes' : 'No' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_paniers_articles_index') }}">back to list</a>
+
+    <a href="{{ path('app_paniers_articles_edit', {'id': paniers_article.id}) }}">edit</a>
+
+    {{ include('paniers_articles/_delete_form.html.twig') }}
+{% endblock %}

@@ -53,7 +53,6 @@ class UserController extends AbstractController
                 )
             );
 
-            $entityManager->persist($panier);
             $entityManager->persist($user);
             $entityManager->persist($panier);
             $entityManager->flush();
