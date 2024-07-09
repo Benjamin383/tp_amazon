@@ -16,10 +16,10 @@ class CommercantsType extends AbstractType
         $builder
             ->add('nom')
             ->add('description')
-            ->add('id_user', EntityType::class, [
-                'class' => User::class,
-                'choice_label' => 'id',
-            ])
+            // ->add('id_user', EntityType::class, [
+            //     'class' => User::class,
+            //     'choice_label' => 'id',
+            // ])
         ;
     }
 
