@@ -6,6 +6,7 @@ namespace App\Controller;
 // use Symfony\Component\HttpFoundation\Response;
 // use Symfony\Component\Routing\Attribute\Route;
 
+use App\Entity\Paniers;
 use App\Entity\User;
 use App\Form\UserType;
 use Doctrine\ORM\EntityManagerInterface;
@@ -38,6 +39,8 @@ class UserController extends AbstractController
     public function inscription(Request $request, UserPasswordHasherInterface $passwordHasher, EntityManagerInterface $entityManager): Response
     {
         $user = new User();
+        $panier= new Paniers();
+        $panier->setIdUser($user);
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
 
@@ -50,6 +53,7 @@ class UserController extends AbstractController
                 )
             );
 
+            $entityManager->persist($panier);
             $entityManager->persist($user);
             $entityManager->flush();
 
