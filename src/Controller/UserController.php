@@ -2,10 +2,6 @@
 
 namespace App\Controller;
 
-// use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-// use Symfony\Component\HttpFoundation\Response;
-// use Symfony\Component\Routing\Attribute\Route;
-
 use App\Entity\Paniers;
 use App\Entity\User;
 use App\Form\UserType;
@@ -13,27 +9,21 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-// use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+use App\Repository\ArticlesRepository;
 
 class UserController extends AbstractController
 {
-    #[Route('/', name: 'app_home')]
-    public function index(): Response
+
+    #[Route('/', name: 'app_home', methods: ['GET'])]
+    public function index(ArticlesRepository $articlesRepository): Response
     {
-        return $this->render('base.html.twig', [
+        return $this->render('articles/index.html.twig', [
             'title' => "Amazonie",
+            'articles' => $articlesRepository->findAll(),
         ]);
     }
-
-    // #[Route('/inscription', name: 'inscription')]
-    // public function inscription(): Response
-    // {
-    //     return $this->render('user/inscription.html.twig', [
-    //         'title' => "Inscription à l'Amazonie",
-    //     ]);
-    // }
 
     #[Route('/inscription', name: 'inscription')]
     public function inscription(Request $request, UserPasswordHasherInterface $passwordHasher, EntityManagerInterface $entityManager): Response
