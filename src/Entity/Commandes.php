@@ -28,6 +28,9 @@ class Commandes
     #[ORM\JoinColumn(nullable: false)]
     private ?Commercants $id_commercants = null;
 
+    #[ORM\OneToOne(mappedBy: 'id_commandes', cascade: ['persist', 'remove'])]
+    private ?Factures $facture = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -77,6 +80,23 @@ class Commandes
     public function setIdCommercants(?Commercants $id_commercants): static
     {
         $this->id_commercants = $id_commercants;
+
+        return $this;
+    }
+
+    public function getFacture(): ?Factures
+    {
+        return $this->facture;
+    }
+
+    public function setFacture(Factures $facture): static
+    {
+        // set the owning side of the relation if necessary
+        if ($facture->getIdCommandes() !== $this) {
+            $facture->setIdCommandes($this);
+        }
+
+        $this->facture = $facture;
 
         return $this;
     }
