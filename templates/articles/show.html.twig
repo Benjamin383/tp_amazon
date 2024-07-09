@@ -27,7 +27,7 @@
     </table>
     <a href="{{ path('app_articles_index') }}">back to list</a>
 
-{% if commercant == article.getIdCommercants() %}
+{% if commercant == article.getCommercant() %}
     
     <a href="{{ path('app_articles_edit', {'id': article.id}) }}">edit</a>
 
