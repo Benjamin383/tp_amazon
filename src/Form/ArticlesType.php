@@ -17,7 +17,7 @@ class ArticlesType extends AbstractType
             ->add('nom')
             ->add('description')
             ->add('url_image')
-            ->add('id_commercants', EntityType::class, [
+            ->add('commercant', EntityType::class, [
                 'class' => Commercants::class,
                 'choice_label' => 'id',
             ])
