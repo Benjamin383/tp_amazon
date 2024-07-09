@@ -16,7 +16,7 @@ class Factures
     #[ORM\Column]
     private ?int $montant = null;
 
-    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
+    #[ORM\OneToOne(inversedBy: 'facture', cascade: ['persist', 'remove'])]
     #[ORM\JoinColumn(nullable: false)]
     private ?Commandes $id_commandes = null;
 

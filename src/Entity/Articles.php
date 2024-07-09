@@ -22,9 +22,9 @@ class Articles
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $url_image = null;
 
-    #[ORM\ManyToOne]
+    #[ORM\ManyToOne(inversedBy: 'articles')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Commercants $id_commercants = null;
+    private ?Commercants $commercant = null;
 
     public function getId(): ?int
     {
@@ -67,14 +67,14 @@ class Articles
         return $this;
     }
 
-    public function getIdCommercants(): ?Commercants
+    public function getCommercant(): ?Commercants
     {
-        return $this->id_commercants;
+        return $this->commercant;
     }
 
-    public function setIdCommercants(?Commercants $id_commercants): static
+    public function setCommercant(?Commercants $commercant): static
     {
-        $this->id_commercants = $id_commercants;
+        $this->commercant = $commercant;
 
         return $this;
     }

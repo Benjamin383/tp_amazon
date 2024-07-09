@@ -34,6 +34,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToOne(mappedBy: 'id_user', cascade: ['persist', 'remove'])]
     private ?Commercants $commercant = null;
 
+    #[ORM\OneToOne(mappedBy: 'id_user', cascade: ['persist', 'remove'])]
+    private ?Paniers $panier = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -129,6 +132,23 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         }
 
         $this->commercant = $commercant;
+
+        return $this;
+    }
+
+    public function getPanier(): ?Paniers
+    {
+        return $this->panier;
+    }
+
+    public function setPanier(Paniers $panier): static
+    {
+        // set the owning side of the relation if necessary
+        if ($panier->getIdUser() !== $this) {
+            $panier->setIdUser($this);
+        }
+
+        $this->panier = $panier;
 
         return $this;
     }
