@@ -11,6 +11,7 @@
     {% endif %}
 
     <form method="post" class="mt-4">
+        <input type="hidden" name="csrf_token" value="{{ token_csrf }}">
         <div class="form-group">
             <label for="username">Email</label>
             <input type="text" name="_username" id="username" value="{{ last_username }}" class="form-control" required autofocus>
