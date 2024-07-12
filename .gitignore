@@ -7,6 +7,11 @@
 /public/bundles/
 /var/
 /vendor/
+.env 
+.env.test
+
+cors
+cors.js
 ###< symfony/framework-bundle ###
 
 ###> phpunit/phpunit ###

@@ -1,4 +1,6 @@
 import './bootstrap.js';
+import './cors.js';
+
 /*
  * Welcome to your app's main JavaScript file!
  *

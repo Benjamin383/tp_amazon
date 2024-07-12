@@ -20,7 +20,7 @@ class ArticlesController extends AbstractController
 {
     private ?Commercants $commercant = null;
 
-    public function __construct(Security $security, CommercantsRepository $commercantsRepository)
+    public function __construct(Security $security)
     {
         $user = $security->getUser();
         if ($user instanceof User && in_array("ROLE_COMMERCANT", $user->getRoles())) {
